@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js/jsinfo.js"></script>
+    <script type="text/javascript">
+      info = 'http://127.0.0.1:8000/info.xsl';  //Info file
+      tupd = 30;                                //Update time info (in sec)
+    </script>
+     <style>
+    @import url(http://fonts.googleapis.com/css?family=Cuprum:400,700&subset=latin,cyrillic);
+    body {
+        margin: 0px;
+    }
+    .content {
+        width: 800px;
+        margin: auto;
+        font-family: 'Cuprum', sans-serif;
+    }
+    h1, h2 {
+        text-align: center;
+        font-weight: normal;
+        margin-bottom: 0px;
+    }
+    h2 {margin-top:0px;}
+    blockquote {
+        background-color: #eee;
+        padding: 10px;
+        text-align: center;
+        color: blue;
+    }
+    pre {
+        text-align: left;
+        margin: 0px;
+    }
+    .link {
+        background-color: #eee;
+        color: blue;
+    }
+    #jsi-info {
+        width: 300px;
+        padding: 5px;
+        background-color: #eee;
+        border: 1px #ccc solid;
+        margin: auto;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="content">
+      <h1>JCat Stream Info Demo Page</h1>
+      <h2>JCat Stream Info Демонстрационная Страница</h2>
+      <p>Добро пожаловать на Демонстрационную страницу JCat Stream Info.<br>
+        Спасибо, что вы выбрали данный скрипт.<br>
+        Ниже будет приведено описание установки, подключения и настройки скрипта.
+      </p>
+      <h3>Установка скрипта</h3>
+      <p>Для начала вам нужно:</p>
+      <p>1. Загрузить скрипт на сайт (папка <span class="link">js</span>).</p>
+      <p>2. Загрузить файл <span class="link">info.xsl</span> из папки <span class="link">to icecast2 web folder</span> в папку веб части сарвера Icecast.<br>
+        По умолчанию <span class="link">/usr/share/icecast2/web</span> для Debian (можно посмотреть в конфиге Icecast-a).<br>
+      </p>
+      <h3>Подключение скрипта</h3>
+      <p>Так как скрипт работает на JQuery то нужно обязательно его подключить.
+        Вы можете использовать JQuery, который шёл вместе с плеером, и подключить его прописав в коде страницы:
+        <blockquote>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;</blockquote>
+        либо не подключать, если он у вас уже подключен на сайте.
+      </p>
+      <p>Также нужно подключить сам скрипт:<br>
+        Если у вас главный поток вещания называется <span style="color:red;">live</span>, а фоновый <span style="color:red;">nonstop</span>, то используйте:
+      <blockquote>
+        &lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.min.js&quot;&gt;&lt;/script&gt;
+      </blockquote>
+        Иначе:
+      <blockquote>
+        &lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.js&quot;&gt;&lt;/script&gt;
+      </blockquote>
+        Предварительно поправив в этом файле в строке 15, 20-22 и 25-27 названия потоков вещания.<br>
+        Например: (Название главного потока <span style="color:red;">play</span>, фонового <span style="color:red;">shadow</span>)
+      <blockquote>
+<pre>...
+  if (d.<span style="color:red;">play</span>.name == '') {einfo = true} else einfo = false; <span style="color:green;">//First Mount (Main)</span>
+...
+  $('#jsi-info').html('Программа: '+d.<span style="color:red;">shadow</span>.name
+  +'&lt;br&gt;Ведущий: '+d.<span style="color:red;">shadow</span>.description
+  +'&lt;br&gt;Слушателей: '+d.<span style="color:red;">shadow</span>.listeners
+...
+  $('#jsi-info').html('Программа: '+d.<span style="color:red;">play</span>.name
+  +'&lt;br&gt;Ведущий: '+d.<span style="color:red;">play</span>.description
+  +'&lt;br&gt;Слушателей: '+d.<span style="color:red;">play</span>.listeners
+...</pre>
+      </blockquote>
+      </p>
+      <h3>Настройка скрипта</h3>
+      <p>Вся настройка заключается в 2-х пунктах:</p>
+      <p>1. Добавить после строк подключения плеера следующее:
+      <blockquote>
+<pre>&lt;script type=&quot;text/javascript&quot;&gt;
+  <span style="color:red;">info</span> = 'http://127.0.0.1:8000/info.xsl'; <span style="color:green;">//Info file</span>
+  <span style="color:red;">tupd</span> = 30; <span style="color:green;">//Update time info (in sec)</span>
+&lt;/script&gt;</pre>
+      </blockquote>
+        Где пременная <span style="color:red;">info</span> - это ссылка на файл <span class="link">info.xsl</span> на сервере вещания Icecast,<br>
+        а пременная <span style="color:red;">tupd</span> - это интервал времени обновления названия играющего трека в секундах.
+      </p>
+      <p>2. Добавить в код вашего сайта, в нужное вам место:
+      <blockquote>
+        &lt;div id=&quot;jsi-info&quot;&gt;&lt;/div&gt;
+      </blockquote>
+      </p>
+      <p>Ниже вы видите рабочий пример:</p>
+      <div id="jsi-info">Раз в 30 секунд в этом блоке будет обновляться информация а потоке</div>
+      </p>
+      <p>
+        В случае возникновения проблем при установке, настройке или работе скрипта, можете обращаться ко мне <a href="http://vk.com/johny_cat">в ВК</a>.
+        <br>На этом всё, приятного использования :3
+      </p>
+      <p>
+        <a href="https://github.com/JoCat/JSInfo">JCat Stream Info</a><br>
+        Copyright (c) 2016 <a href="http://vk.com/johny_cat">Andrew Molchanov</a>
+      </p>
+    </div>
+  </body>
+</html>
