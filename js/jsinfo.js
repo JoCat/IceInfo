@@ -1,37 +1,43 @@
 /*
- JCat Stream Info v.1.0 - Informer for Site (Icecast2 Online Radio)
- Copyright (c) 2016 Andrew Molchanov
+ JCat Stream Info v.2.0.0_beta1 - Informer for Site (Icecast2 Online Radio)
+ Copyright (c) 2016-2019 Andrew Molchanov
  https://github.com/JoCat/JSInfo
 */
-$(document).ready(function(){
-    radioinfo = setTimeout(function shinfo() {
-        $.ajax({
-          dataType: 'jsonp',
-          jsonp: 'callback',
-          jsonpCallback: 'info',
-          url: info,
-          success: function(d){
-            try {
-                if (d.live.name == '') {einfo = true} else einfo = false;//First Mount (Main)
-            } catch(e) {
-                einfo = true;
+
+// Informer Object
+JSInfo = {
+    // Params
+    server_address: 'http://127.0.0.1:8000/', // Default address:port
+    mounts_list: ['live', 'nonstop'], // Mount point list
+    info_link: 'info.xsl', // Info file
+    time_update: 10, // Time to update information (in seconds)
+
+    // Functions
+    init: function (init_params) {
+        // Setting transmitted parameters
+        if (typeof init_params == 'object') {
+            for (let parameter of Object.keys(init_params)) {
+                JSInfo[parameter] = init_params[parameter];
             }
-            if (einfo == true){//Second Mount (Fallback)
-                $('#jsi-info').html('Программа: '+d.nonstop.name
-                +'<br>Ведущий: '+d.nonstop.description
-                +'<br>Слушателей: '+d.nonstop.listeners
-                +'<br>Рекорд: Временно недоступен');
-            }else{//First Mount (Main)
-                $('#jsi-info').html('Программа: '+d.live.name
-                +'<br>Ведущий: '+d.live.description
-                +'<br>Слушателей: '+d.live.listeners
-                +'<br>Рекорд: Временно недоступен');
-            }
-          },
-          error: function(){
-              $("#jsi-info").html('Ошибка загрузки! Возможно радио сейчас не работает...');
-          }
-        });
-        radioinfo = setTimeout(shinfo,tupd*1000);
-    },tupd*1000);
-});
+        }
+
+        timer = setTimeout(function showinfo() {
+            $.ajax({
+                dataType: 'json',
+                url: JSInfo.server_address + JSInfo.info_link,
+                success: function(d) {
+                    for (let mount_name of JSInfo.mounts_list) {
+                        if (d[mount_name]) {
+                          for (let param of Object.keys(d[mount_name])) {
+                            $("#jsi-"+param).html(d[mount_name][param]);
+                          }
+                          break;
+                        }
+                    }
+                }
+            });
+            timer = setTimeout(showinfo,JSInfo.time_update*1000);
+        },JSInfo.time_update*1000);
+    },
+
+};
