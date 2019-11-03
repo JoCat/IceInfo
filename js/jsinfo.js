@@ -1,5 +1,5 @@
 /*
- JCat Stream Info v.2.0.0_beta1 - Informer for Site (Icecast2 Online Radio)
+ JCat Stream Info v.2.0.0_beta2 - Informer for Site (Icecast2 Online Radio)
  Copyright (c) 2016-2019 Andrew Molchanov
  https://github.com/JoCat/JSInfo
 */
@@ -13,20 +13,21 @@ JSInfo = {
     time_update: 10, // Time to update information (in seconds)
 
     // Functions
-    init: function (init_params) {
+    init(init_params) {
         // Setting transmitted parameters
         if (typeof init_params == 'object') {
             for (let parameter of Object.keys(init_params)) {
-                JSInfo[parameter] = init_params[parameter];
+                this[parameter] = init_params[parameter];
             }
         }
 
-        timer = setTimeout(function showinfo() {
+        let _this = this;
+        let timer = setTimeout(function showinfo() {
             $.ajax({
                 dataType: 'json',
-                url: JSInfo.server_address + JSInfo.info_link,
+                url: _this.server_address + _this.info_link,
                 success: function(d) {
-                    for (let mount_name of JSInfo.mounts_list) {
+                    for (let mount_name of _this.mounts_list) {
                         if (d[mount_name]) {
                           for (let param of Object.keys(d[mount_name])) {
                             $("#jsi-"+param).html(d[mount_name][param]);
@@ -36,8 +37,8 @@ JSInfo = {
                     }
                 }
             });
-            timer = setTimeout(showinfo,JSInfo.time_update*1000);
-        },JSInfo.time_update*1000);
+            timer = setTimeout(showinfo, _this.time_update*1000);
+        }, _this.time_update*1000);
     },
 
 };

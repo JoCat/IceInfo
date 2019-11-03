@@ -3,21 +3,15 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="js/jsinfo.js"></script>
-    <script type="text/javascript">
-      info = 'http://127.0.0.1:8000/info.xsl';  //Info file
-      tupd = 30;                                //Update time info (in sec)
-    </script>
-     <style>
-    @import url(http://fonts.googleapis.com/css?family=Cuprum:400,700&subset=latin,cyrillic);
+    <style>
+    @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap&subset=cyrillic);
     body {
         margin: 0px;
     }
     .content {
         width: 800px;
         margin: auto;
-        font-family: 'Cuprum', sans-serif;
+        font-family: 'Exo 2', sans-serif;
     }
     h1, h2 {
         text-align: center;
@@ -39,7 +33,7 @@
         background-color: #eee;
         color: blue;
     }
-    #jsi-info {
+    .jsi-info {
         width: 300px;
         padding: 5px;
         background-color: #eee;
@@ -111,7 +105,11 @@
       </blockquote>
       </p>
       <p>Ниже вы видите рабочий пример:</p>
-      <div id="jsi-info">Раз в 30 секунд в этом блоке будет обновляться информация а потоке</div>
+      <div class="jsi-info">
+        Сейчас играет: <span id="jsi-title"></span><br>
+        Слушателей: <span id="jsi-listeners"></span><br>
+        Поток: <span id="jsi-name"></span>
+      </div>
       </p>
       <p>
         В случае возникновения проблем при установке, настройке или работе скрипта, можете обращаться ко мне <a href="http://vk.com/johny_cat">в ВК</a>.
@@ -119,8 +117,16 @@
       </p>
       <p>
         <a href="https://github.com/JoCat/JSInfo">JCat Stream Info</a><br>
-        Copyright (c) 2016 <a href="http://vk.com/johny_cat">Andrew Molchanov</a>
+        Copyright (c) 2016-2019 <a href="http://vk.com/johny_cat">Andrew Molchanov</a>
       </p>
     </div>
+
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/jsinfo.min.js"></script>
+    <script type="text/javascript">
+        JSInfo.init({
+            server_address: 'http://192.168.1.64:8000/'
+        });
+    </script>
   </body>
 </html>
