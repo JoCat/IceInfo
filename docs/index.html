@@ -1,132 +1,150 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>JSInfo.js - Информер для сайта</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
     @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap&subset=cyrillic);
     body {
-        margin: 0px;
-    }
-    .content {
-        width: 800px;
-        margin: auto;
         font-family: 'Exo 2', sans-serif;
     }
-    h1, h2 {
-        text-align: center;
-        font-weight: normal;
-        margin-bottom: 0px;
+    header {
+        background-color: #0af;
+        color: #fff;
+        padding: .5em;
+        margin-bottom: 2em;
     }
-    h2 {margin-top:0px;}
     blockquote {
-        background-color: #eee;
-        padding: 10px;
-        text-align: center;
-        color: blue;
+        background-color: #f5f5f5;
+        padding: 10px 15px;
     }
     pre {
-        text-align: left;
         margin: 0px;
     }
-    .link {
-        background-color: #eee;
-        color: blue;
+    pre, code {
+        font-weight: bold;
     }
-    .jsi-info {
-        width: 300px;
-        padding: 5px;
-        background-color: #eee;
-        border: 1px #ccc solid;
-        margin: auto;
+    h2 {
+        margin-top: 3rem;
     }
     </style>
   </head>
   <body>
-    <div class="content">
-      <h1>JCat Stream Info Demo Page</h1>
-      <h2>JCat Stream Info Демонстрационная Страница</h2>
-      <p>Добро пожаловать на Демонстрационную страницу JCat Stream Info.<br>
-        Спасибо, что вы выбрали данный скрипт.<br>
+    <header>
+      <div class="container text-center">
+        <h1>JSInfo <small>– Информер для сайта</small></h1>
+      </div>
+    </header>
+    <div class="container">
+      <p>Добро пожаловать на страницу JCat Stream Info.<br>
+        JSInfo – скрипт информера для сайта интенет-радио на платформе Icecast2.<br>
         Ниже будет приведено описание установки, подключения и настройки скрипта.
       </p>
-      <h3>Установка скрипта</h3>
+      <h2>Установка скрипта</h2>
       <p>Для начала вам нужно:</p>
-      <p>1. Загрузить скрипт на сайт (папка <span class="link">js</span>).</p>
-      <p>2. Загрузить файл <span class="link">info.xsl</span> из папки <span class="link">to icecast2 web folder</span> в папку веб части сарвера Icecast.<br>
-        По умолчанию <span class="link">/usr/share/icecast2/web</span> для Debian (можно посмотреть в конфиге Icecast-a).<br>
-      </p>
-      <h3>Подключение скрипта</h3>
-      <p>Так как скрипт работает на JQuery то нужно обязательно его подключить.
-        Вы можете использовать JQuery, который шёл вместе с плеером, и подключить его прописав в коде страницы:
-        <blockquote>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;</blockquote>
-        либо не подключать, если он у вас уже подключен на сайте.
-      </p>
-      <p>Также нужно подключить сам скрипт:<br>
-        Если у вас главный поток вещания называется <span style="color:red;">live</span>, а фоновый <span style="color:red;">nonstop</span>, то используйте:
+      <p>1. Загрузить скрипт на сайт:</p>
       <blockquote>
-        &lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.min.js&quot;&gt;&lt;/script&gt;
+        <code>jsinfo.min.js</code> или <code>jsinfo.js</code> из папки <code>js</code>
       </blockquote>
-        Иначе:
+      <p>2. Загрузить файл <code>info.xsl</code> из папки <code>to icecast2 web folder</code> в папку веб части сарвера Icecast.</p>
       <blockquote>
-        &lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.js&quot;&gt;&lt;/script&gt;
+        По умолчанию <code>/usr/share/icecast2/web</code> для Debian (можно посмотреть в конфиге Icecast-a).
       </blockquote>
-        Предварительно поправив в этом файле в строке 15, 20-22 и 25-27 названия потоков вещания.<br>
-        Например: (Название главного потока <span style="color:red;">play</span>, фонового <span style="color:red;">shadow</span>)
+      <h2>Подключение и настройка скрипта</h2>
+      <p>Подключить скрипт:</p>
       <blockquote>
-<pre>...
-  if (d.<span style="color:red;">play</span>.name == '') {einfo = true} else einfo = false; <span style="color:green;">//First Mount (Main)</span>
-...
-  $('#jsi-info').html('Программа: '+d.<span style="color:red;">shadow</span>.name
-  +'&lt;br&gt;Ведущий: '+d.<span style="color:red;">shadow</span>.description
-  +'&lt;br&gt;Слушателей: '+d.<span style="color:red;">shadow</span>.listeners
-...
-  $('#jsi-info').html('Программа: '+d.<span style="color:red;">play</span>.name
-  +'&lt;br&gt;Ведущий: '+d.<span style="color:red;">play</span>.description
-  +'&lt;br&gt;Слушателей: '+d.<span style="color:red;">play</span>.listeners
-...</pre>
+        <code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.min.js&quot;&gt;&lt;/script&gt;</code>
       </blockquote>
-      </p>
-      <h3>Настройка скрипта</h3>
       <p>Вся настройка заключается в 2-х пунктах:</p>
-      <p>1. Добавить после строк подключения плеера следующее:
+      <p>1. Добавить после строк подключения плеера следующее:</p>
       <blockquote>
 <pre>&lt;script type=&quot;text/javascript&quot;&gt;
-  <span style="color:red;">info</span> = 'http://127.0.0.1:8000/info.xsl'; <span style="color:green;">//Info file</span>
-  <span style="color:red;">tupd</span> = 30; <span style="color:green;">//Update time info (in sec)</span>
+    JSInfo.init({
+        server_address: '<span style="color:#e83e8c;">*server address*</span>'
+    });
 &lt;/script&gt;</pre>
       </blockquote>
-        Где пременная <span style="color:red;">info</span> - это ссылка на файл <span class="link">info.xsl</span> на сервере вещания Icecast,<br>
-        а пременная <span style="color:red;">tupd</span> - это интервал времени обновления названия играющего трека в секундах.
-      </p>
+      <p>Указав вместо <code>*server address*</code> свой адрес сервера, например:</p>
+      <blockquote>
+        <code>server_address: '<span style="color:#e83e8c;">http://127.0.0.1:8000/</span>'</code>
+      </blockquote>
+      <p>А также указав дополнительные параметры, если требуется, список которых приведён ниже.</p>
       <p>2. Добавить в код вашего сайта, в нужное вам место:
       <blockquote>
-        &lt;div id=&quot;jsi-info&quot;&gt;&lt;/div&gt;
+        <code>&lt;div id=&quot;jsi-*param name*&quot;&gt;&lt;/div&gt;</code>
+      </blockquote>
+      <p>где <code>*param name*</code> это название информационного поля, например:</p>
+      <blockquote>
+        <code>&lt;div id=&quot;jsi-title&quot;&gt;&lt;/div&gt;</code>
       </blockquote>
       </p>
-      <p>Ниже вы видите рабочий пример:</p>
-      <div class="jsi-info">
-        Сейчас играет: <span id="jsi-title"></span><br>
-        Слушателей: <span id="jsi-listeners"></span><br>
-        Поток: <span id="jsi-name"></span>
-      </div>
+      <p>Ниже вы видите пример блока с выводом информации:</p>
+      <blockquote>
+<pre>&lt;div&gt;
+    Сейчас играет: &lt;span id="jsi-title"&gt;&lt;/span&gt;&lt;br&gt;
+    Слушателей: &lt;span id="jsi-listeners"&gt;&lt;/span&gt;&lt;br&gt;
+    Максимум слушателей: &lt;span id="jsi-listeners_peak"&gt;&lt;/span&gt;&lt;br&gt;
+    Поток: &lt;span id="jsi-name"&gt;&lt;/span&gt;
+&lt;/div&gt;</pre>
+      </blockquote>
+      <h2>Параметры скрипта</h2>
+      <p>
+        <code>server_address</code><br>
+        По умолчанию: <code>'http://127.0.0.1:8000/'</code><br>
+        Адрес сервера Icecast
       </p>
       <p>
-        В случае возникновения проблем при установке, настройке или работе скрипта, можете обращаться ко мне <a href="http://vk.com/johny_cat">в ВК</a>.
+        <code>mounts_list</code><br>
+        По умолчанию: <code>['live', 'nonstop']</code><br>
+        Список mount поинтов с которых берётся информация в порядке убывания (первый приоритетнее всех последующих) 
+      </p>
+      <p>
+        <code>info_link</code><br>
+        По умолчанию: <code>'info.xsl'</code><br>
+        Название информационного файла
+      </p>
+      <p>
+        <code>time_update</code><br>
+        По умолчанию: <code>10</code><br>
+        Время периода обновления информации в секундах
+      </p>
+      <h2>Доступные информационные поля</h2>
+      <p>
+        <code>name</code><br>
+        Название mount поинта
+      </p>
+      <p>
+        <code>description</code><br>
+        Описание mount поинта
+      </p>
+      <p>
+        <code>listeners</code><br>
+        Количество слушателей в данный момент времени
+      </p>
+      <p>
+        <code>listeners_peak</code><br>
+        Максимальное количество слушателей с последнего запуска радио (сервера Icecast)
+      </p>
+      <p>
+        <code>title</code><br>
+        Играющий трек в формате "Исполнитель - Название песни"
+      </p>
+      <p>
+        <code>genre</code><br>
+        Жанр играющего трека
+      </p>
+    </div>
+    <footer class="container mt-5">
+     <p>
+        В случае возникновения проблем при установке, настройке или работе скрипта, можете обращаться ко мне <a href="https://vk.com/johny_cat">в ВК</a>.
         <br>На этом всё, приятного использования :3
       </p>
       <p>
         <a href="https://github.com/JoCat/JSInfo">JCat Stream Info</a><br>
-        Copyright (c) 2016-2019 <a href="http://vk.com/johny_cat">Andrew Molchanov</a>
+        Copyright (c) 2016-2019 <a href="https://vk.com/johny_cat">Andrew Molchanov</a>
       </p>
-    </div>
-
-    <script src="http://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/jsinfo.min.js"></script>
-    <script type="text/javascript">
-        JSInfo.init({
-            server_address: 'http://192.168.1.64:8000/'
-        });
-    </script>
+    </footer>
   </body>
 </html>

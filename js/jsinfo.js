@@ -23,17 +23,15 @@ JSInfo = {
 
         let _this = this;
         let timer = setTimeout(function showinfo() {
-            $.ajax({
-                dataType: 'json',
-                url: _this.server_address + _this.info_link,
-                success: function(d) {
-                    for (let mount_name of _this.mounts_list) {
-                        if (d[mount_name]) {
-                          for (let param of Object.keys(d[mount_name])) {
-                            $("#jsi-"+param).html(d[mount_name][param]);
-                          }
-                          break;
+            _this.request(_this.server_address + _this.info_link, (data) => {
+                for (let mount_name of _this.mounts_list) {
+                    if (data[mount_name]) {
+                        for (let param of Object.keys(data[mount_name])) {
+                            if (document.querySelectorAll("#jsi-"+param)[0]) {
+                                document.querySelectorAll("#jsi-"+param)[0].innerHTML = data[mount_name][param];
+                            }
                         }
+                      break;
                     }
                 }
             });
@@ -41,4 +39,15 @@ JSInfo = {
         }, _this.time_update*1000);
     },
 
+    request(url, callback) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.onload = () => {
+          if (this.status >= 200 && this.status < 400) {
+            var data = JSON.parse(this.response);
+            callback(data);
+          }
+        };
+        request.send();
+    }
 };
