@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>JSInfo.js - Информер для сайта</title>
+    <title>IceInfo.js - Информер для сайта</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
     @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700&display=swap&subset=cyrillic);
@@ -34,19 +34,19 @@
   <body>
     <header>
       <div class="container text-center">
-        <h1>JSInfo <small>– Информер для сайта</small></h1>
+        <h1>IceInfo <small>– Информер для сайта</small></h1>
       </div>
     </header>
     <div class="container">
-      <p>Добро пожаловать на страницу JCat Stream Info.<br>
-        JSInfo – скрипт информера для сайта интенет-радио на платформе Icecast2.<br>
+      <p>Добро пожаловать на страницу IceInfo.<br>
+        IceInfo – скрипт информера для сайта интенет-радио на платформе Icecast2.<br>
         Ниже будет приведено описание установки, подключения и настройки скрипта.
       </p>
       <h2>Установка скрипта</h2>
       <p>Для начала вам нужно:</p>
       <p>1. Загрузить скрипт на сайт:</p>
       <blockquote>
-        <code>jsinfo.min.js</code> или <code>jsinfo.js</code> из папки <code>js</code>
+        <code>iceinfo.min.js</code> или <code>iceinfo.js</code> из папки <code>js</code>
       </blockquote>
       <p>2. Загрузить файл <code>info.xsl</code> из папки <code>to icecast2 web folder</code> в папку веб части сарвера Icecast.</p>
       <blockquote>
@@ -55,13 +55,13 @@
       <h2>Подключение и настройка скрипта</h2>
       <p>Подключить скрипт:</p>
       <blockquote>
-        <code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/jsinfo.min.js&quot;&gt;&lt;/script&gt;</code>
+        <code>&lt;script type=&quot;text/javascript&quot; src=&quot;js/iceinfo.min.js&quot;&gt;&lt;/script&gt;</code>
       </blockquote>
       <p>Вся настройка заключается в 2-х пунктах:</p>
       <p>1. Добавить после строк подключения плеера следующее:</p>
       <blockquote>
 <pre>&lt;script type=&quot;text/javascript&quot;&gt;
-    JSInfo.init({
+    IceInfo.init({
         server_address: '<span style="color:#e83e8c;">*server address*</span>'
     });
 &lt;/script&gt;</pre>
@@ -73,20 +73,20 @@
       <p>А также указав дополнительные параметры, если требуется, список которых приведён ниже.</p>
       <p>2. Добавить в код вашего сайта, в нужное вам место:
       <blockquote>
-        <code>&lt;div id=&quot;jsi-*param name*&quot;&gt;&lt;/div&gt;</code>
+        <code>&lt;div id=&quot;iceinfo-*param name*&quot;&gt;&lt;/div&gt;</code>
       </blockquote>
       <p>где <code>*param name*</code> это название информационного поля, например:</p>
       <blockquote>
-        <code>&lt;div id=&quot;jsi-title&quot;&gt;&lt;/div&gt;</code>
+        <code>&lt;div id=&quot;iceinfo-title&quot;&gt;&lt;/div&gt;</code>
       </blockquote>
       </p>
       <p>Ниже вы видите пример блока с выводом информации:</p>
       <blockquote>
 <pre>&lt;div&gt;
-    Сейчас играет: &lt;span id="jsi-title"&gt;&lt;/span&gt;&lt;br&gt;
-    Слушателей: &lt;span id="jsi-listeners"&gt;&lt;/span&gt;&lt;br&gt;
-    Максимум слушателей: &lt;span id="jsi-listeners_peak"&gt;&lt;/span&gt;&lt;br&gt;
-    Поток: &lt;span id="jsi-name"&gt;&lt;/span&gt;
+    Сейчас играет: &lt;span id="iceinfo-title"&gt;&lt;/span&gt;&lt;br&gt;
+    Слушателей: &lt;span id="iceinfo-listeners"&gt;&lt;/span&gt;&lt;br&gt;
+    Максимум слушателей: &lt;span id="iceinfo-listeners_peak"&gt;&lt;/span&gt;&lt;br&gt;
+    Поток: &lt;span id="iceinfo-name"&gt;&lt;/span&gt;
 &lt;/div&gt;</pre>
       </blockquote>
       <h2>Параметры скрипта</h2>
@@ -142,7 +142,7 @@
         <br>На этом всё, приятного использования :3
       </p>
       <p>
-        <a href="https://github.com/JoCat/JSInfo">JCat Stream Info</a><br>
+        <a href="https://github.com/JoCat/IceInfo">IceInfo</a><br>
         Copyright (c) 2016-2020 <a href="https://jocat.ru/">Andrew Molchanov</a>
       </p>
     </footer>

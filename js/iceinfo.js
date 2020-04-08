@@ -1,11 +1,9 @@
 /*
- JCat Stream Info v.2.0.1 - Informer for Site (Icecast2 Online Radio)
+ IceInfo v.2.0.2 - Informer for Site (Icecast2 Online Radio)
  Copyright (c) 2016-2020 Andrew Molchanov
- https://github.com/JoCat/JSInfo
+ https://github.com/JoCat/IceInfo
 */
-
-// Informer Object
-JSInfo = {
+IceInfo = {
     // Params
     server_address: 'http://127.0.0.1:8000/', // Default address:port
     mounts_list: ['live', 'nonstop'], // Mount point list
@@ -20,23 +18,23 @@ JSInfo = {
                 this[parameter] = init_params[parameter];
             }
         }
+        this.showinfo();
+    },
 
-        let _this = this;
-        let timer = setTimeout(function showinfo() {
-            _this.request(_this.server_address + _this.info_link, (data) => {
-                for (let mount_name of _this.mounts_list) {
-                    if (data[mount_name]) {
-                        for (let param of Object.keys(data[mount_name])) {
-                            if (document.getElementById('jsi-'+param)) {
-                                document.getElementById('jsi-'+param).innerHTML = data[mount_name][param];
-                            }
+    showinfo() {
+        this.request(this.server_address + this.info_link, (data) => {
+            for (let mount_name of this.mounts_list) {
+                if (data[mount_name]) {
+                    for (let param of Object.keys(data[mount_name])) {
+                        if (document.getElementById('iceinfo-'+param)) {
+                            document.getElementById('iceinfo-'+param).innerHTML = data[mount_name][param];
                         }
-                      break;
                     }
+                    break;
                 }
-            });
-            timer = setTimeout(showinfo, _this.time_update*1000);
-        }, _this.time_update*1000);
+            }
+        });
+        this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
     },
 
     request(url, callback) {
