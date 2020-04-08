@@ -1,6 +1,6 @@
 /*
- JCat Stream Info v.2.0.0_beta2 - Informer for Site (Icecast2 Online Radio)
- Copyright (c) 2016-2019 Andrew Molchanov
+ JCat Stream Info v.2.0.1 - Informer for Site (Icecast2 Online Radio)
+ Copyright (c) 2016-2020 Andrew Molchanov
  https://github.com/JoCat/JSInfo
 */
 
@@ -27,8 +27,8 @@ JSInfo = {
                 for (let mount_name of _this.mounts_list) {
                     if (data[mount_name]) {
                         for (let param of Object.keys(data[mount_name])) {
-                            if (document.querySelectorAll("#jsi-"+param)[0]) {
-                                document.querySelectorAll("#jsi-"+param)[0].innerHTML = data[mount_name][param];
+                            if (document.getElementById('jsi-'+param)) {
+                                document.getElementById('jsi-'+param).innerHTML = data[mount_name][param];
                             }
                         }
                       break;
@@ -42,7 +42,7 @@ JSInfo = {
     request(url, callback) {
         var request = new XMLHttpRequest();
         request.open('GET', url, true);
-        request.onload = () => {
+        request.onload = function() {
           if (this.status >= 200 && this.status < 400) {
             var data = JSON.parse(this.response);
             callback(data);
